@@ -42,7 +42,9 @@ export default function Home() {
       </section>
 
       {/* About / Features Section */}
-      <AboutSection className="mb-0" />  {/* remove bottom margin if any */}
+     <div className="mb-0">
+  <AboutSection />
+</div>  {/* remove bottom margin if any */}
 
       {/* Footer Section */}
       <footer

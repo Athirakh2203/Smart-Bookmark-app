@@ -45,7 +45,9 @@ export default function DashboardPage() {
         () => fetchBookmarks(user.id)
       )
       .subscribe()
-    return () => supabase.removeChannel(channel)
+    return () => {
+  supabase.removeChannel(channel)
+}
   }, [user?.id, fetchBookmarks])
 
   if (loading) return <p className="p-6 text-white">Loading...</p>
