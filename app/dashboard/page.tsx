@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [loading, setLoading] = useState(true)
 
+  // Fetch bookmarks for a user
   const fetchBookmarks = useCallback(async (uid: string) => {
     const { data, error } = await supabase
       .from('bookmarks')
@@ -21,6 +22,7 @@ export default function DashboardPage() {
     if (!error) setBookmarks(data || [])
   }, [])
 
+  // Get user session on client-side
   useEffect(() => {
     const getUser = async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -35,6 +37,7 @@ export default function DashboardPage() {
     getUser()
   }, [fetchBookmarks])
 
+  // Subscribe to real-time changes
   useEffect(() => {
     if (!user?.id) return
     const channel = supabase
@@ -46,8 +49,8 @@ export default function DashboardPage() {
       )
       .subscribe()
     return () => {
-  supabase.removeChannel(channel)
-}
+      supabase.removeChannel(channel)
+    }
   }, [user?.id, fetchBookmarks])
 
   if (loading) return <p className="p-6 text-white">Loading...</p>
@@ -60,7 +63,7 @@ export default function DashboardPage() {
   return (
     <div
       className="min-h-screen p-6"
-      style={{ backgroundColor: '#75405fff' }} // dark dusty purple
+      style={{ backgroundColor: '#75405fff' }}
     >
       {/* NAV HEADER */}
       <nav className="flex justify-between items-center p-4 bg-black/30 rounded-xl shadow-md mb-6">
